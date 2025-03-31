@@ -1,0 +1,28 @@
+<launch>
+  <!-- Add the Grounded-SAM-2 project directory to PYTHONPATH so that custom modules can be found -->
+  <env name="PYTHONPATH" value="/your/custom/path/to/Grounded-SAM-2:$(env PYTHONPATH)"/>
+  
+  <node name="florence2_sam2_realsense_node" pkg="florence2_sam2_ros" type="florence2_sam2_ros_realsense_node.py" output="screen">
+    <!-- 
+         'sam2_checkpoint' parameter specifies the absolute path to the SAM2 model checkpoint.
+         This file is loaded by the node to initialize the model.
+    -->
+    <param name="sam2_checkpoint" value="/your/custom/path/to/sam2.1_hiera_large.pt" />
+    <!--      
+      Supported pipelines include:
+        - "object_detection_segmentation": Uses the object_detection_and_segmentation function.
+        - "dense_region_caption_segmentation": Uses the dense_region_caption_and_segmentation function.
+        - "region_proposal_segmentation": Uses the region_proposal_and_segmentation function.
+        - "phrase_grounding_segmentation": Uses the phrase_grounding_and_segmentation function.
+        - "referring_expression_segmentation": Uses the referring_expression_segmentation function.
+        - "open_vocabulary_detection_segmentation": Uses the open_vocabulary_detection_and_segmentation function.
+    -->
+    <param name="pipeline" value="object_detection_segmentation" />
+    <!-- 
+         'text_input' parameter: 
+         Additional text input for the model. 
+         Leave empty if not required.
+    -->
+    <param name="text_input" value="" />
+  </node>
+</launch>
