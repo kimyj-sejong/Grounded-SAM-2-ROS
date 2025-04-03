@@ -80,20 +80,44 @@ roslaunch florence2_sam2_ros florence2_sam2_realsense.launch
 ```
 
 ## ⚠️ Troubleshooting
+* ####  If you see an error like:
 
-If you see an error like:
-
-```css
+```bash
 Falling back to all available kernels for scaled_dot_product_attention (which may have a slower speed).
 ```
 
-Then, in the file `sam2/modeling/sam/transformer.py` (around line 22), add the following lines:
+* Then, in the file `sam2/modeling/sam/transformer.py` (around line 22), add the following lines:
 
 ```python
 USE_FLASH_ATTN = False
 MATH_KERNEL_ON = True
 OLD_GPU = True
 ```
+
+* #### If you see an error like:
+
+```bash
+[ERROR] [1743586184.401199]: Error converting ROS image to OpenCV: /lib/x86_64-linux-gnu/libp11-kit.so.0: undefined symbol: ffi_type_pointer, version LIBFFI_BASE_7.0 shutting down processing monitor...
+```
+
+* Solution:
+
+```bash
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libffi.so.7
+```
+
+* #### If you see an error like:
+
+```bash
+ValueError: Unrecognized configuration class <class 'transformers_modules.microsoft.Florence-2-large.00d2f1570b00c6dea5df998f5635db96840436bc.configuration_florence2.Florence2LanguageConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+```
+
+* Solution:
+
+```bash
+pip install -U transformers
+```
+
 
 ## 📜 License
 This project is based on the original Grounded-SAM-2 repository. Please refer to the original repository’s license for details.
